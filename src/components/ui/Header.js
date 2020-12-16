@@ -3,11 +3,13 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  CssBaseline,
   useScrollTrigger,
   Box,
   Container,
 } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+
+import logo from '../../assets/webdev-logo.svg'
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -21,12 +23,30 @@ function ElevationScroll(props) {
   });
 }
 
+const useStyles = makeStyles(theme => ({
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: "3em"
+  },
+  logo: {
+    height: "6em",
+  }
+}))
+
 export default function Header(props) {
+  const classes = useStyles()
+
   return (
-    <ElevationScroll>
-      <AppBar position="fixed">
-        <Toolbar>Spark Development</Toolbar>
-      </AppBar>
-    </ElevationScroll>
+    <>
+      <ElevationScroll>
+        <AppBar position="fixed">
+          <Toolbar disableGutters>
+             <img src={logo} alt='company logo' className={classes.logo} />
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      {/* div with attr adds spacing below toolbar to show following element */}
+      <div className={classes.toolbarMargin} /> 
+    </>
   );
 }
