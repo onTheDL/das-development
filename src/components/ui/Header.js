@@ -2,10 +2,12 @@ import React from "react";
 import {
   AppBar,
   Toolbar,
-  Typography,
   useScrollTrigger,
   Box,
   Container,
+  Tab,
+  Tabs,
+
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -30,7 +32,15 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     height: "6em",
-  }
+  },
+  tabContainer: {
+    marginLeft: "auto"
+  },
+  tab: {
+    ...theme.typography.tab,
+    minWidth: 10,
+    marginLeft: "25px",
+  },
 }))
 
 export default function Header(props) {
@@ -42,6 +52,13 @@ export default function Header(props) {
         <AppBar position="fixed">
           <Toolbar disableGutters>
              <img src={logo} alt='company logo' className={classes.logo} />
+             <Tabs className={classes.tabContainer}>
+               <Tab className={classes.tab} label='Home' />
+               <Tab className={classes.tab} label='Services' />
+               <Tab className={classes.tab} label='The Revolution' />
+               <Tab className={classes.tab} label='About Us' />
+               <Tab className={classes.tab} label='Contact Us' />
+             </Tabs>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
