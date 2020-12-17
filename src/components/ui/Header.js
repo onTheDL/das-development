@@ -8,6 +8,8 @@ import {
   Tab,
   Tabs,
   Button,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     padding: 0,
     "&:hover": {
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
     },
   },
   logo: {
@@ -60,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (window.location.pathname === "/" && value !== 0) {
@@ -77,6 +81,17 @@ export default function Header(props) {
 
   const handleChange = (e, value) => {
     setValue(value);
+  };
+
+  const handleClick = (e) => {
+    // 'currentTarget' = element that was clicked
+    setAnchorEl(e.currentTarget);
+    setOpen(true);
+  };
+
+  const handleClose = (e) => {
+    setAnchorEl(null);
+    setOpen(false);
   };
 
   return (
@@ -106,8 +121,11 @@ export default function Header(props) {
                 label="Home"
               />
               <Tab
+                aria-owns={anchorEl ? "simple-menu" : undefined}
+                aria-haspopup={anchorEl ? "true" : undefined}
                 className={classes.tab}
                 component={Link}
+                onMouseOver={(event) => handleClick(event)}
                 to="/services"
                 label="Services"
               />
@@ -139,6 +157,19 @@ export default function Header(props) {
             >
               Free Estimate
             </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{onMouseLeave: handleClose}}
+            >
+              <MenuItem onClick={handleClose}>
+                Custom Software Development
+              </MenuItem>
+              <MenuItem onClick={handleClose}>Mobile App Development</MenuItem>
+              <MenuItem onClick={handleClose}>Website Development</MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
