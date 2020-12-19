@@ -109,7 +109,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.orange,
   },
   drawerItemSelected: {
-    opacity: 1,
+    "& .MuiListItemText-root": {
+      opacity: 1,
+    },
   },
   appbar: {
     zIndex: theme.zIndex.modal + 1,
@@ -242,12 +244,13 @@ export default function Header(props) {
         onClose={handleClose}
         MenuListProps={{ onMouseLeave: handleClose }}
         elevation={0}
+        style={{ zIndex: 1302 }}
         classes={{ paper: classes.menu }}
         keepMounted
       >
         {menuOptions.map((option, i) => (
           <MenuItem
-            key={option.link}
+            key={`${option}${i}`}
             classes={{ root: classes.menuItem }}
             component={Link}
             to={option.link}
@@ -289,15 +292,9 @@ export default function Header(props) {
               component={Link}
               to={route.link}
               selected={value === route.activeIndex}
+              classes={{ selected: classes.drawerItemSelected }}
             >
-              <ListItemText
-                className={
-                  value === 0
-                    ? [classes.drawerItem, classes.drawerItemSelected]
-                    : classes.drawerItem
-                }
-                disableTypography
-              >
+              <ListItemText className={classes.drawerItem} disableTypography>
                 {route.name}
               </ListItemText>
             </ListItem>
@@ -312,17 +309,13 @@ export default function Header(props) {
             button
             component={Link}
             to="/estimate"
-            className={classes.drawerItemEstimate}
+            classes={{
+              root: classes.drawerItemEstimate,
+              selected: classes.drawerItemSelected,
+            }}
             selected={value === 5}
           >
-            <ListItemText
-              className={
-                value === 5
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-              disableTypography
-            >
+            <ListItemText className={classes.drawerItem} disableTypography>
               Estimate
             </ListItemText>
           </ListItem>
