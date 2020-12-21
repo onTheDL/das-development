@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const dasBlue = '#0B72B9'
 const dasOrange = '#FFBA60'
+const dasGrey = '#868686'
 
 export default createMuiTheme({
   palette: {
@@ -46,6 +47,20 @@ export default createMuiTheme({
       fontSize: "1.75rem",
       color: dasBlue,
       fontWeight: 700,
-    }
+    },
+    subtitle1: {
+      fontSize: "1.25rem",
+      fontWeight: 300,
+      color: dasGrey,
+    },
+    learnBtn: {
+      borderColor: dasBlue,
+      borderWidth: 2,
+      textTransform: "none",
+      color: dasBlue,
+      borderRadius: 50,
+      fontFamily: "Roboto",
+      fontWeight: "bold",
+    },
   }
 })
