@@ -4,12 +4,18 @@ import animationData from '../animations/landinganimation/data'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Grid,
-  Button, 
+  Button,
+  Typography, 
 } from '@material-ui/core'
 import ButtonArrow from './ui/ButtonArrow'
 
 const useStyles = makeStyles(theme => ({
-
+  animation: {
+    maxWidth: "50em",
+    minWidth: "21em",
+    marginTop: "2em",
+    marginLeft: "10%",
+  },
 }))
 
 export default function LandingPage() {
@@ -26,14 +32,16 @@ export default function LandingPage() {
     <>
       <Grid container direction="column">
         <Grid item>
-          <Grid container direction="row" justify='flex-end'>
+          <Grid container direction="row" justify='flex-end' alignItems='center'>
 
-            <Grid item>
-              <div>
+          {/* Add sm prop */}
+            <Grid sm item>
+              <Typography variant='h2' align='center'>
                 Developing Awesome Software <br/>
-                D.A.S. is good!</div>
-              <Grid container>
+                D.A.S. is good!
+              </Typography>
 
+              <Grid container>
                 <Grid item>
                   <Button variant='contained'>Free Estimate</Button>
                 </Grid>
@@ -47,8 +55,8 @@ export default function LandingPage() {
 
               </Grid>
             </Grid>
-
-            <Grid item>
+            {/* Add sm prop */}
+            <Grid sm item className={classes.animation}>
               <Lottie options={defaultOptions} height={'100%'} width={'100%'} />
             </Grid>
           </Grid>

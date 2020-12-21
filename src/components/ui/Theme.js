@@ -1,19 +1,19 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const sparkBlue = '#0B72B9'
-const sparkOrange = '#FFBA60'
+const dasBlue = '#0B72B9'
+const dasOrange = '#FFBA60'
 
 export default createMuiTheme({
   palette: {
     common: {
-      blue: `${sparkBlue}`,
-      orange: `${sparkOrange}`
+      blue: `${dasBlue}`,
+      orange: `${dasOrange}`
     },
     primary: {
-      main: `${sparkBlue}`
+      main: `${dasBlue}`
     },
     secondary: {
-      main: `${sparkOrange}`
+      main: `${dasOrange}`
     }
   },
   typography: {
@@ -28,6 +28,24 @@ export default createMuiTheme({
       fontSize: "1rem",
       textTransform: "none",
       color: "white",
+    },
+    h2: {
+      fontFamily: "Raleway",
+      fontWeight: 700,
+      fontSize: "2.5rem",
+      color: dasBlue,
+      lineHeight: 1.5
+    },
+    h3: {
+      fontFamily: "Pacifico",
+      fontSize: "2.5rem",
+      color: dasBlue,
+    },
+    h4: {
+      fontFamily: "Raleway",
+      fontSize: "1.75rem",
+      color: dasBlue,
+      fontWeight: 700,
     }
   }
 })
