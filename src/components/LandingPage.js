@@ -1,11 +1,21 @@
 import React from "react";
 import Lottie from "react-lottie";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Grid, Button, Typography, useMediaQuery } from "@material-ui/core";
+import {
+  Grid,
+  Button,
+  Typography,
+  useMediaQuery,
+  Card,
+  CardContent,
+} from "@material-ui/core";
 import ButtonArrow from "./ui/ButtonArrow";
 
 import animationData from "../animations/landinganimation/data";
 import customSoftwareIcon from "../assets/Custom Software Icon.svg";
+import mobileAppsIcon from "../assets/mobileIcon.svg";
+import websiteIcon from "../assets/websiteIcon.svg";
+import revolutionBackground from "../assets/repeatingBackground.svg";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -62,10 +72,10 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.learnBtn,
     fontSize: "0.7rem",
     height: 35,
-    padding: 5,
+    padding: 8,
     [theme.breakpoints.down("sm")]: {
       marginBottom: "2em",
-    }
+    },
   },
   subtitle: {
     marginBottom: "1em",
@@ -80,7 +90,30 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "12em",
     [theme.breakpoints.down("sm")]: {
       padding: 25,
-    }
+    },
+  },
+  revolutionBackground: {
+    backgroundImage: `url(${revolutionBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
+  },
+  revolutionCard: {
+    position: "absolute",
+    boxShadow: theme.shadows[10],
+    borderRadius: 15,
+    padding: "8em",
+    maxWidth: 855,
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "8em",
+      paddingBottom: "8em",
+      paddingLeft: 0,
+      paddingRight: 0,
+      borderRadius: 0,
+      width: "100%",
+    },
   },
 }));
 
@@ -91,7 +124,7 @@ export default function LandingPage() {
 
   const defaultOptions = {
     loop: true,
-    autoplay: true,
+    autoplay: false,
     animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
@@ -143,7 +176,7 @@ export default function LandingPage() {
 
         <Grid item>
           {" "}
-          {/*-----Services Block-----*/}
+          {/*-----Custom Development Block-----*/}
           <Grid
             container
             direction="row"
@@ -182,17 +215,139 @@ export default function LandingPage() {
                 alt="custom software icon"
               />
             </Grid>
+          </Grid>
+        </Grid>
 
-            {/* <Grid item>
-              <Typography variant="h4">
-                Mobile App Development
+        <Grid item>
+          {" "}
+          {/*-----iOS/Android Block-----*/}
+          <Grid
+            container
+            direction="row"
+            justify={matchesSM ? "center" : "flex-end"}
+            className={classes.serviceContainer}
+          >
+            <Grid
+              item
+              style={{
+                textAlign: matchesSM ? "center" : undefined,
+              }}
+            >
+              <Typography variant="h4">iOS/Android App Development</Typography>
+              <Typography variant="subtitle1" className={classes.subtitle}>
+                Extend Functionality. Extend Access. Increase Engagement.
               </Typography>
-            </Grid> */}
-            {/* <Grid item>
-              <Typography variant="h4">
-                Website Development
+              <Typography variant="subtitle1">
+                Integrate your web experience or create a standalone app
+                {matchesSM ? null : <br />} with either mobile platform.
               </Typography>
-            </Grid> */}
+              <Button variant="outlined" className={classes.learnBtn}>
+                <span style={{ marginRight: 10 }}>Learn More</span>
+                <ButtonArrow
+                  width={10}
+                  height={10}
+                  fill={theme.palette.common.blue}
+                />
+              </Button>
+            </Grid>
+
+            <Grid
+              item
+              style={{
+                marginRight: matchesSM ? 0 : "5em",
+              }}
+            >
+              <img
+                className={classes.icon}
+                src={mobileAppsIcon}
+                alt="mobile icon"
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item>
+          {" "}
+          {/*-----Website Development Block-----*/}
+          <Grid
+            container
+            direction="row"
+            justify={matchesSM ? "center" : undefined}
+            className={classes.serviceContainer}
+          >
+            <Grid
+              item
+              style={{
+                marginLeft: matchesSM ? 0 : "5em",
+                textAlign: matchesSM ? "center" : undefined,
+              }}
+            >
+              <Typography variant="h4">Website Development</Typography>
+              <Typography variant="subtitle1" className={classes.subtitle}>
+                Reach More. Discover More. Sell More.
+              </Typography>
+              <Typography variant="subtitle1">
+                Optimized for Search Engines. Build for speed.
+              </Typography>
+              <Button variant="outlined" className={classes.learnBtn}>
+                <span style={{ marginRight: 10 }}>Learn More</span>
+                <ButtonArrow
+                  width={10}
+                  height={10}
+                  fill={theme.palette.common.blue}
+                />
+              </Button>
+            </Grid>
+
+            <Grid item>
+              <img
+                className={classes.icon}
+                src={websiteIcon}
+                alt="website icon"
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        {/*----- Revolution Block -----*/}
+        <Grid item>
+          <Grid
+            container
+            style={{ height: "100em", marginTop: "12em" }}
+            alignItems="center"
+            justify="center"
+          >
+            <Card className={classes.revolutionCard}>
+              <CardContent>
+                <Grid
+                  container
+                  direction="column"
+                  style={{ textAlign: "center" }}
+                >
+                  <Grid item>
+                    <Typography variant="h3" gutterBottom>The Revolution</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subtitle1" style={{marginBottom: "1.5rem"}}>
+                      Beta non-disclosure agreement value proposition stealth
+                      launch party. Non-disclosure agreement value proposition
+                      bootstrapping startup creative direct mailing strategy
+                      technology funding marketing pitch holy grail influencer.
+                      {/* Branding infographic accelerator first mover advantage stock analytics business-to-business learning curve return on investment bootstrapping. Infographic research & development gamification responsive web design sales traction buyer.  */}
+                    </Typography>
+                    <Button className={classes.learnBtnHero} variant="outlined">
+                      <span style={{ marginRight: 10 }}>Learn More</span>
+                      <ButtonArrow
+                        width={15}
+                        height={15}
+                        fill={theme.palette.common.blue}
+                      />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+            <div className={classes.revolutionBackground} />
           </Grid>
         </Grid>
       </Grid>

@@ -140,7 +140,7 @@ export default function Header({ value, setValue, selectedIndex, setSelectedInde
       selectedIndex: 1,
     },
     {
-      name: "Mobile App Development",
+      name: "iOS/Android App Development",
       link: "/mobileapps",
       activeIndex: 1,
       selectedIndex: 2,

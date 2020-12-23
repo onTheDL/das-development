@@ -20,7 +20,7 @@ export default createMuiTheme({
   typography: {
     tab: {
       fontFamily: "Raleway",
-      textTransform: "capitalize",
+      textTransform: "none",
       fontWeight: 700,
       fontSize: "1rem",
     },
