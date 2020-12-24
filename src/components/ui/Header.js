@@ -118,17 +118,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({ value, setValue, selectedIndex, setSelectedIndex }) {
+export default function Header({
+  value,
+  setValue,
+  selectedIndex,
+  setSelectedIndex,
+}) {
   const classes = useStyles();
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   const [openDrawer, setOpenDrawer] = useState(false);
-  
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
-  
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const menuOptions = [
@@ -170,7 +174,6 @@ export default function Header({ value, setValue, selectedIndex, setSelectedInde
   ];
 
   useEffect(() => {
-
     [...menuOptions, ...routes].forEach((route) => {
       switch (window.location.pathname) {
         case `${route.link}`:
@@ -180,6 +183,9 @@ export default function Header({ value, setValue, selectedIndex, setSelectedInde
               setSelectedIndex(route.selectedIndex);
             }
           }
+          break;
+        case '/estimate':
+          setValue(5);
           break;
         default:
           break;
@@ -235,6 +241,7 @@ export default function Header({ value, setValue, selectedIndex, setSelectedInde
         className={classes.button}
         component={Link}
         to="/estimate"
+        onClick={() => setValue(5)}
       >
         Free Estimate
       </Button>

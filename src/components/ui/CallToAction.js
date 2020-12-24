@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Grid, Typography, Button, useMediaQuery } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ButtonArrow from "./ButtonArrow";
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.down("md")]: {
       backgroundImage: `url(${mobileBackground})`,
-      backgroundAttachment: "inherit" //back to static
+      backgroundAttachment: "inherit", //back to static
     },
   },
   estimateBtn: {
@@ -40,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.5rem",
     marginRight: "5em",
     marginLeft: "2em",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light,
+    },
     [theme.breakpoints.down("sm")]: {
       marginRight: 0,
       marginLeft: 0,
@@ -47,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CallToAction() {
+export default function CallToAction({ setValue, setSelectedIndex }) {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -77,7 +81,13 @@ export default function CallToAction() {
               Take advantage of the 21st Century.
             </Typography>
             <Grid container item justify={matchesSM ? "center" : "undefined"}>
-              <Button variant="outlined" className={classes.learnBtn}>
+              <Button
+                component={Link}
+                to="/services"
+                variant="outlined"
+                className={classes.learnBtn}
+                onClick={() => setValue(1)}
+              >
                 <span style={{ marginRight: 5 }}>Learn More</span>
                 <ButtonArrow
                   width={10}
@@ -90,7 +100,13 @@ export default function CallToAction() {
         </Grid>
       </Grid>
       <Grid item>
-        <Button variant="contained" className={classes.estimateBtn}>
+        <Button
+          component={Link}
+          to="/estimate"
+          variant="contained"
+          className={classes.estimateBtn}
+          onClick={() => setValue(5)}
+        >
           Free Estimate
         </Button>
       </Grid>
