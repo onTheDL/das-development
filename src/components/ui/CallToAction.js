@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Typography, Button, useMediaQuery } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ButtonArrow from "./ButtonArrow";
 
@@ -22,11 +22,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${background})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
+    backgroundAttachment: "fixed", //parallax
     backgroundRepeat: "no-repeat",
     height: "60em",
     width: "100%",
     [theme.breakpoints.down("md")]: {
       backgroundImage: `url(${mobileBackground})`,
+      backgroundAttachment: "inherit" //back to static
     },
   },
   estimateBtn: {
@@ -37,16 +39,35 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.orange,
     fontSize: "1.5rem",
     marginRight: "5em",
+    marginLeft: "2em",
+    [theme.breakpoints.down("sm")]: {
+      marginRight: 0,
+      marginLeft: 0,
+    },
   },
 }));
 
 export default function CallToAction() {
   const classes = useStyles();
   const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const direction = matchesSM ? "column" : "row";
 
   return (
-    <Grid container alignItems="center" justify="space-between" className={classes.background}>
-      <Grid item style={{ marginLeft: "5em" }}>
+    <Grid
+      container
+      alignItems="center"
+      justify={matchesSM ? "center" : "space-between"}
+      className={classes.background}
+      direction={direction}
+    >
+      <Grid
+        item
+        style={{
+          marginLeft: matchesSM ? 0 : "5em",
+          textAlign: matchesSM ? "center" : "inherit",
+        }}
+      >
         <Grid container direction="column">
           <Grid item>
             <Typography variant="h2">
@@ -55,7 +76,7 @@ export default function CallToAction() {
             <Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>
               Take advantage of the 21st Century.
             </Typography>
-            <Grid container item>
+            <Grid container item justify={matchesSM ? "center" : "undefined"}>
               <Button variant="outlined" className={classes.learnBtn}>
                 <span style={{ marginRight: 5 }}>Learn More</span>
                 <ButtonArrow
