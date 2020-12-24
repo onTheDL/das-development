@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import ButtonArrow from "./ui/ButtonArrow";
 
+import CallToAction from "./ui/CallToAction"
+
 import animationData from "../animations/landinganimation/data";
 import customSoftwareIcon from "../assets/Custom Software Icon.svg";
 import mobileAppsIcon from "../assets/mobileIcon.svg";
@@ -74,8 +76,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.7rem",
     height: 35,
     padding: 8,
+    marginTop: "1.5em",
     [theme.breakpoints.down("sm")]: {
       marginBottom: "2em",
+      marginTop: "1.0em",
     },
   },
   subtitle: {
@@ -440,6 +444,11 @@ export default function LandingPage() {
             </Grid>
             <div className={classes.infoBackground} />
           </Grid>
+        </Grid>
+
+      {/*-----Call to Action Block-----*/}
+        <Grid item>
+            <CallToAction />
         </Grid>
       </Grid>
     </>
