@@ -258,7 +258,6 @@ export default function LandingPage({ setValue, setSelectedIndex }) {
             direction="row"
             justify={matchesSM ? "center" : "flex-end"}
             className={classes.serviceContainer}
-            onClick={() => {setValue(1); setSelectedIndex(2)}}
           >
             <Grid
               item

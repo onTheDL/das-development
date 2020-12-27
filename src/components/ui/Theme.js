@@ -58,6 +58,11 @@ export default createMuiTheme({
       fontSize: "1.25rem",
       fontWeight: 300,
     },
+    body1: {
+      fontSize: "1.25rem",
+      color: dasGrey,
+      fontWeight: 300,
+    },
     learnBtn: {
       borderColor: dasBlue,
       borderWidth: 2,
