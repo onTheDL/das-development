@@ -1,4 +1,5 @@
 import React from "react";
+import CallToAction from "./ui/CallToAction"
 import Lottie from "react-lottie";
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -23,12 +24,6 @@ import automationAnimation from "../animations/automationAnimation/data.json";
 import uxAnimation from "../animations/uxAnimation/data";
 
 const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    paddingLeft: "5em",
-    paddingRight: "5em",
-    paddingTop: "2em",
-    paddingBottom: "10em",
-  },
   heading: {
     maxWidth: "40em",
   },
@@ -38,6 +33,14 @@ const useStyles = makeStyles((theme) => ({
   itemContainer: {
     maxWidth: "40em",
   },
+  rowContainer: {
+    paddingLeft: "5em",
+    paddingRight: "5em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "1.5em",
+      paddingRight: "1.5em",
+    },
+  },
 }));
 
 export default function CustomSoftware({ setValue, setSelectedIndex }) {
@@ -45,6 +48,8 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+
 
   const documentsOptions = {
     loop: true,
@@ -83,12 +88,14 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
   };
 
   return (
-    <Grid container direction="column" className={classes.mainContainer}>
+    <Grid container direction="column">
       <Grid
         item
         container
         direction="row"
         justify={matchesMD ? "center" : undefined}
+        className={classes.rowContainer}
+        style={{marginTop: matchesXS ? "1em" : "2em"}}
       >
         <Hidden mdDown>
           <Grid
@@ -186,6 +193,7 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
         direction="row"
         justify="center"
         style={{ marginTop: "15em", marginBottom: "20em" }}
+        className={classes.rowContainer}
       >
         <Grid
           item
@@ -249,30 +257,47 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
         direction={matchesMD ? "column" : "row"}
         alignItems={matchesMD ? "center" : undefined}
         justify="space-around"
+        className={classes.rowContainer}
       >
         {/*---Documents Block---*/}
-        <Grid item container className={classes.itemContainer} md>
-          <Grid
-            item
-            container
-            direction="column"
-            style={{ marginBottom: matchesMD ? "15em" : 0 }}
-            md
-          >
+        <Grid
+          item
+          container
+          direction={matchesSM ? "column" : "row"}
+          className={classes.itemContainer}
+          style={{ marginBottom: matchesMD ? "15em" : 0 }}
+          md
+        >
+          <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4">Digital Documents & Data</Typography>
-
-              <Typography variant="body1" paragraph>
+              <Typography variant="h4" align={matchesSM ? "center" : undefined}>
+                Digital Documents & Data
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : undefined}
+                paragraph
+              >
                 Where were we. Marty, you're acting like you haven't seen me in
                 a week. I don't know, but I'm gonna find out.
               </Typography>
 
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : undefined}
+                paragraph
+              >
                 Please note that Einstein's clock is in complete synchronization
                 with my control watch. Hey wait, wait a minute, who are you?
               </Typography>
 
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : undefined}
+                paragraph
+              >
                 Whoa, whoa, Biff, what's that? Hey Biff, check out this guy's
                 life preserver, dork thinks he's gonna drown
               </Typography>
@@ -289,7 +314,13 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
         </Grid>
 
         {/*---Scale Block---*/}
-        <Grid item container className={classes.itemContainer} md>
+        <Grid
+          item
+          container
+          className={classes.itemContainer}
+          direction={matchesSM ? "column" : "row"}
+          md
+        >
           <Grid item md>
             <Lottie
               options={scaleOptions}
@@ -300,11 +331,15 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
 
           <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4" align="right">
+              <Typography variant="h4" align={matchesSM ? "center" : "right"}>
                 Scale
               </Typography>
 
-              <Typography variant="body1" align="right" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "right"}
+                paragraph
+              >
                 Calm down, Marty, I didn't disintegrate anything. The molecular
                 structure of Einstein and the car are completely intact. You
                 can't, uh, that is, uh, nobody's home. Yeah, gimme a Tab.
@@ -320,14 +355,15 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
         container
         direction="row"
         style={{ marginTop: "20em", marginBottom: "20em" }}
+        className={classes.rowContainer}
       >
         <Grid item container direction="column" alignItems="center">
           <Grid item>
             <img
               src={root}
               alt="tree with roots extending out"
-              height="450em"
-              width="450em"
+              height={matchesSM ? "300em" : "450em"}
+              width={matchesSM ? "300em" : "450em"}
             />
           </Grid>
           <Grid item className={classes.itemContainer}>
@@ -353,31 +389,47 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
         direction={matchesMD ? "column" : "row"}
         alignItems={matchesMD ? "center" : undefined}
         justify="space-around"
-        style={{ marginBottom: "10em" }}
+        style={{ marginBottom: "20em" }}
+        className={classes.rowContainer}
       >
         {/*---Automation Block---*/}
         <Grid
           item
           container
           className={classes.itemContainer}
+          direction={matchesSM ? "column" : "row"}
           style={{ marginBottom: matchesMD ? "15em" : 0 }}
           md
         >
           <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4">Automation</Typography>
+              <Typography variant="h4" align={matchesSM ? "center" : undefined}>
+                Automation
+              </Typography>
 
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                paragraph
+                align={matchesSM ? "center" : undefined}
+              >
                 Why waste time when you don't have to?
               </Typography>
 
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                paragraph
+                align={matchesSM ? "center" : undefined}
+              >
                 About how far ahead are you going? Yeah, I guessed you're a
                 sailor, aren't you, that's why you wear that life preserver.
                 Doc, I'm from the future.
               </Typography>
 
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                paragraph
+                align={matchesSM ? "center" : undefined}
+              >
                 I have to tell you about the future. Science Fiction Theater.
                 Hey Dad, George, hey, you on the bike. Yeah. I'll get it back to
                 you, alright?
@@ -395,7 +447,13 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
         </Grid>
 
         {/*-----UX Design Block-----*/}
-        <Grid item container className={classes.itemContainer} md>
+        <Grid
+          item
+          container
+          className={classes.itemContainer}
+          direction={matchesSM ? "column" : "row"}
+          md
+        >
           <Grid item md>
             <Lottie
               options={uxOptions}
@@ -406,25 +464,41 @@ export default function CustomSoftware({ setValue, setSelectedIndex }) {
 
           <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4" align="right">
+              <Typography variant="h4" align={matchesSM ? "center" : "right"}>
                 User Experience Design
               </Typography>
 
-              <Typography variant="body1" align="right" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "right"}
+                paragraph
+              >
                 A good design that isn't usable isn't a good design.
               </Typography>
-              <Typography variant="body1" align="right" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "right"}
+                paragraph
+              >
                 According to the flyer, at 10:04 pm lightning will strike the
                 clocktower sending one point twenty-one gigawatts into the
                 flux-capacitor, sending you back to 1985. Alright now, watch
                 this.
               </Typography>
-              <Typography variant="body1" align="right" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "right"}
+                paragraph
+              >
                 It's about the future, isn't it?
               </Typography>
             </Grid>
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid item>
+        <CallToAction setValue={setValue} />
       </Grid>
     </Grid>
   );
