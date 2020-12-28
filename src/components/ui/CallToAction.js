@@ -86,7 +86,7 @@ export default function CallToAction({ setValue, setSelectedIndex }) {
                 to="/services"
                 variant="outlined"
                 className={classes.learnBtn}
-                onClick={() => setValue(1)}
+                onClick={() => {setValue(1); setSelectedIndex(0)}}
               >
                 <span style={{ marginRight: 5 }}>Learn More</span>
                 <ButtonArrow
