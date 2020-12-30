@@ -1,15 +1,12 @@
 import React from "react";
 import Lottie from "react-lottie";
 import CallToAction from "./ui/CallToAction";
-import { Link } from "react-router-dom";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Grid,
-  IconButton,
   Typography,
   useMediaQuery,
-  Hidden,
 } from "@material-ui/core";
 
 import technologyAnimation from "../animations/technologyAnimation/data.json";
