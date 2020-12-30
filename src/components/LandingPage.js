@@ -128,6 +128,9 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     width: "100%",
   },
+  specialLetter: {
+    color: theme.palette.common.orange,
+  },
 }));
 
 export default function LandingPage({ setValue, setSelectedIndex }) {
@@ -158,7 +161,7 @@ export default function LandingPage({ setValue, setSelectedIndex }) {
           >
             <Grid sm item className={classes.heroTextContainer}>
               <Typography variant="h2" align="center">
-                Developing Awesome Software <br />
+                <span className={classes.specialLetter}>D</span>eveloping <span className={classes.specialLetter}>A</span>wesome <span className={classes.specialLetter}>S</span>oftware <br />
                 D.A.S. is good!
               </Typography>
 
