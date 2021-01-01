@@ -91,9 +91,48 @@ export default function Contact({ setValue, setSelectedIndex }) {
   const theme = useTheme();
 
   const [name, setName] = useState("");
+
   const [phone, setPhone] = useState("");
+  const [phoneHelper, setPhoneHelper] = useState("");
+
   const [email, setEmail] = useState("");
+  const [emailHelper, setEmailHelper] = useState("");
+
   const [message, setMessage] = useState("");
+
+  const onChange = (event) => {
+    let valid;
+
+    switch (event.target.id) {
+      case "email":
+        setEmail(event.target.value);
+        valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+          event.target.value
+        );
+
+        valid ? setEmailHelper("") : setEmailHelper("Invalid email");
+        // if(!valid) {
+        //   setEmailHelper("Invalid email")
+        // } else {
+        //   setEmailHelper("")
+        // }
+        break;
+
+      case "phone":
+        setPhone(event.target.value);
+
+        valid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(
+          event.target.value
+        );
+
+        valid ? setPhoneHelper("") : setPhoneHelper("Invalid phone entry");
+
+        break;
+
+      default:
+        break;
+    }
+  };
 
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -140,7 +179,9 @@ export default function Contact({ setValue, setSelectedIndex }) {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  (555) 555-5555
+                  <a href="tel:5555555555" style={{ textDecoration: "none", color: "inherit" }}>
+                    (555) 555-5555
+                  </a>
                 </Typography>
               </Grid>
             </Grid>
@@ -159,7 +200,12 @@ export default function Contact({ setValue, setSelectedIndex }) {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  daniel.laserna@gmail.com
+                  <a
+                    href="mailto:daniel.laserna@gmail.com"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    daniel.laserna@gmail.com
+                  </a>
                 </Typography>
               </Grid>
             </Grid>
@@ -171,7 +217,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
               direction="column"
               style={{ maxWidth: "20em" }}
             >
-              <Grid item style={{marginBottom: "0.5em"}}>
+              <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
                   label="Name"
                   id="name"
@@ -180,22 +226,26 @@ export default function Contact({ setValue, setSelectedIndex }) {
                   onChange={(e) => setName(e.target.value)}
                 />
               </Grid>
-              <Grid item style={{marginBottom: "0.5em"}}>
+              <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
                   label="Phone"
                   id="phone"
                   value={phone}
                   fullWidth
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={onChange}
+                  error={phoneHelper.length !== 0}
+                  helperText={phoneHelper}
                 />
               </Grid>
-              <Grid item style={{marginBottom: "0.5em"}}>
+              <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
                   label="Email"
                   id="email"
                   value={email}
                   fullWidth
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={onChange}
+                  error={emailHelper.length !== 0}
+                  helperText={emailHelper}
                 />
               </Grid>
             </Grid>
@@ -216,7 +266,18 @@ export default function Contact({ setValue, setSelectedIndex }) {
 
             {/* --- Send Message Button --- */}
             <Grid item container justify="center" style={{ marginTop: "2em" }}>
-              <Button variant="contained" className={classes.sendBtn}>
+              <Button
+                variant="contained"
+                className={classes.sendBtn}
+                disabled={
+                  name.length === 0 ||
+                  message.length === 0 ||
+                  phone.length === 0 ||
+                  phoneHelper.length !== 0 ||
+                  email.length === 0 ||
+                  emailHelper.length !== 0
+                }
+              >
                 Send Message
                 <img
                   src={airplane}
