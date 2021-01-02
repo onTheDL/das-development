@@ -85,6 +85,10 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: theme.palette.secondary.light,
     },
+    [theme.breakpoints.down("sm")]: {
+      height: 40,
+      width: 225,
+    }
   },
 }));
 
@@ -276,14 +280,14 @@ export default function Contact({ setValue, setSelectedIndex }) {
               <Button
                 variant="contained"
                 className={classes.sendBtn}
-                // disabled={
-                //   name.length === 0 ||
-                //   message.length === 0 ||
-                //   phone.length === 0 ||
-                //   phoneHelper.length !== 0 ||
-                //   email.length === 0 ||
-                //   emailHelper.length !== 0
-                // }
+                disabled={
+                  name.length === 0 ||
+                  message.length === 0 ||
+                  phone.length === 0 ||
+                  phoneHelper.length !== 0 ||
+                  email.length === 0 ||
+                  emailHelper.length !== 0
+                }
                 onClick={() => setOpen(true)}
               >
                 Send Message
@@ -301,7 +305,9 @@ export default function Contact({ setValue, setSelectedIndex }) {
       {/*---Confirm Message Dialog---*/}
       <Dialog
         open={open}
+        fullScreen={matchesXS}
         onClose={() => setOpen(false)}
+        style={{zIndex: 1302}}
         PaperProps={{
           style: {
             paddingTop: matchesXS ? "1em" : "5em",
@@ -365,7 +371,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
           </Grid>
 
           {/* --- Message Text Field --- */}
-          <Grid item style={{ maxWidth: "20em" }}>
+          <Grid item style={{ maxWidth: matchesXS ? "100%" : "20em" }}>
             <TextField
               InputProps={{ disableUnderline: true }}
               className={classes.message}
@@ -381,6 +387,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
           <Grid
             item
             container
+            direction={matchesSM ? "column" : "row"}
             style={{ marginTop: "2em", marginBottom: "1em" }}
             alignItems="center"
           >
@@ -397,14 +404,14 @@ export default function Contact({ setValue, setSelectedIndex }) {
               <Button
                 variant="contained"
                 className={classes.sendBtn}
-                // disabled={
-                //   name.length === 0 ||
-                //   message.length === 0 ||
-                //   phone.length === 0 ||
-                //   phoneHelper.length !== 0 ||
-                //   email.length === 0 ||
-                //   emailHelper.length !== 0
-                // }
+                disabled={
+                  name.length === 0 ||
+                  message.length === 0 ||
+                  phone.length === 0 ||
+                  phoneHelper.length !== 0 ||
+                  email.length === 0 ||
+                  emailHelper.length !== 0
+                }
                 onClick={() => setOpen(true)}
               >
                 Send Message
