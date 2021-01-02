@@ -9,6 +9,8 @@ import {
   useMediaQuery,
   Button,
   TextField,
+  Dialog,
+  DialogContent,
 } from "@material-ui/core";
 
 import background from "../assets/background.jpg";
@@ -90,6 +92,10 @@ export default function Contact({ setValue, setSelectedIndex }) {
   const classes = useStyles();
   const theme = useTheme();
 
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+
   const [name, setName] = useState("");
 
   const [phone, setPhone] = useState("");
@@ -99,6 +105,8 @@ export default function Contact({ setValue, setSelectedIndex }) {
   const [emailHelper, setEmailHelper] = useState("");
 
   const [message, setMessage] = useState("");
+
+  const [open, setOpen] = useState(false);
 
   const onChange = (event) => {
     let valid;
@@ -133,10 +141,6 @@ export default function Contact({ setValue, setSelectedIndex }) {
         break;
     }
   };
-
-  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
-  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   return (
     <Grid container>
@@ -179,7 +183,10 @@ export default function Contact({ setValue, setSelectedIndex }) {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  <a href="tel:5555555555" style={{ textDecoration: "none", color: "inherit" }}>
+                  <a
+                    href="tel:5555555555"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
                     (555) 555-5555
                   </a>
                 </Typography>
@@ -269,14 +276,15 @@ export default function Contact({ setValue, setSelectedIndex }) {
               <Button
                 variant="contained"
                 className={classes.sendBtn}
-                disabled={
-                  name.length === 0 ||
-                  message.length === 0 ||
-                  phone.length === 0 ||
-                  phoneHelper.length !== 0 ||
-                  email.length === 0 ||
-                  emailHelper.length !== 0
-                }
+                // disabled={
+                //   name.length === 0 ||
+                //   message.length === 0 ||
+                //   phone.length === 0 ||
+                //   phoneHelper.length !== 0 ||
+                //   email.length === 0 ||
+                //   emailHelper.length !== 0
+                // }
+                onClick={() => setOpen(true)}
               >
                 Send Message
                 <img
@@ -289,6 +297,127 @@ export default function Contact({ setValue, setSelectedIndex }) {
           </Grid>
         </Grid>
       </Grid>
+
+      {/*---Confirm Message Dialog---*/}
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={{
+          style: {
+            paddingTop: matchesXS ? "1em" : "5em",
+            paddingBottom: matchesXS ? "1em" : "5em",
+            paddingLeft: matchesXS
+              ? 0
+              : matchesSM
+              ? "5em"
+              : matchesMD
+              ? "10em"
+              : "20em",
+            paddingRight: matchesXS
+              ? 0
+              : matchesSM
+              ? "5em"
+              : matchesMD
+              ? "10em"
+              : "20em",
+          },
+        }}
+      >
+        <DialogContent>
+          <Grid container direction="column">
+            <Grid item>
+              <Typography align="center" variant="h4" gutterBottom>
+                Confirm Message
+              </Typography>
+            </Grid>
+
+            <Grid item style={{ marginBottom: "0.5em" }}>
+              <TextField
+                label="Name"
+                id="name"
+                value={name}
+                fullWidth
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Grid>
+            <Grid item style={{ marginBottom: "0.5em" }}>
+              <TextField
+                label="Phone"
+                id="phone"
+                value={phone}
+                fullWidth
+                onChange={onChange}
+                error={phoneHelper.length !== 0}
+                helperText={phoneHelper}
+              />
+            </Grid>
+            <Grid item style={{ marginBottom: "0.5em" }}>
+              <TextField
+                label="Email"
+                id="email"
+                value={email}
+                fullWidth
+                onChange={onChange}
+                error={emailHelper.length !== 0}
+                helperText={emailHelper}
+              />
+            </Grid>
+          </Grid>
+
+          {/* --- Message Text Field --- */}
+          <Grid item style={{ maxWidth: "20em" }}>
+            <TextField
+              InputProps={{ disableUnderline: true }}
+              className={classes.message}
+              value={message}
+              id="message"
+              fullWidth
+              onChange={(e) => setMessage(e.target.value)}
+              multiline
+              rows={10}
+            />
+          </Grid>
+
+          <Grid
+            item
+            container
+            style={{ marginTop: "2em", marginBottom: "1em" }}
+            alignItems="center"
+          >
+            <Grid item>
+              <Button
+                style={{ fontWeight: 300 }}
+                color="primary"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                className={classes.sendBtn}
+                // disabled={
+                //   name.length === 0 ||
+                //   message.length === 0 ||
+                //   phone.length === 0 ||
+                //   phoneHelper.length !== 0 ||
+                //   email.length === 0 ||
+                //   emailHelper.length !== 0
+                // }
+                onClick={() => setOpen(true)}
+              >
+                Send Message
+                <img
+                  src={airplane}
+                  alt="paper airplane"
+                  style={{ marginLeft: "1em" }}
+                />
+              </Button>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
 
       {/*-----Call to Action Block----- */}
       <Grid
