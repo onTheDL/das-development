@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import CallToAction from "./ui/CallToAction";
 import ButtonArrow from "./ui/ButtonArrow";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
@@ -11,6 +11,8 @@ import {
   TextField,
   Dialog,
   DialogContent,
+  CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
 
 import background from "../assets/background.jpg";
@@ -88,30 +90,35 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: 40,
       width: 225,
-    }
+    },
   },
 }));
 
 export default function Contact({ setValue, setSelectedIndex }) {
   const classes = useStyles();
   const theme = useTheme();
+  
+  // States
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneHelper, setPhoneHelper] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailHelper, setEmailHelper] = useState("");
+  const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
+  //Media Queries
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const [name, setName] = useState("");
-
-  const [phone, setPhone] = useState("");
-  const [phoneHelper, setPhoneHelper] = useState("");
-
-  const [email, setEmail] = useState("");
-  const [emailHelper, setEmailHelper] = useState("");
-
-  const [message, setMessage] = useState("");
-
-  const [open, setOpen] = useState(false);
-
+  //Form Validation
   const onChange = (event) => {
     let valid;
 
@@ -123,11 +130,6 @@ export default function Contact({ setValue, setSelectedIndex }) {
         );
 
         valid ? setEmailHelper("") : setEmailHelper("Invalid email");
-        // if(!valid) {
-        //   setEmailHelper("Invalid email")
-        // } else {
-        //   setEmailHelper("")
-        // }
         break;
 
       case "phone":
@@ -145,6 +147,33 @@ export default function Contact({ setValue, setSelectedIndex }) {
         break;
     }
   };
+
+  const onConfirm = () => {
+    setLoading(true);
+
+    axios
+      .get("https://us-central1-dasdev-site.cloudfunctions.net/sendMail")
+      .then((res) => {
+        setLoading(false);
+        setOpen(false);
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+        setAlert({open: true, message: "Message sent successfully!", backgroundColor: "#4BB543"})
+      })
+      .catch((err) => {
+        setLoading(false);
+        setAlert({open: true, message: "An error occured.  Please try again.", backgroundColor: "#FF3232"})
+      });
+  };
+
+  const buttonContents = (
+    <>
+      Send Message
+      <img src={airplane} alt="paper airplane" style={{ marginLeft: "1em" }} />
+    </>
+  );
 
   return (
     <Grid container>
@@ -290,24 +319,19 @@ export default function Contact({ setValue, setSelectedIndex }) {
                 }
                 onClick={() => setOpen(true)}
               >
-                Send Message
-                <img
-                  src={airplane}
-                  alt="paper airplane"
-                  style={{ marginLeft: "1em" }}
-                />
+                {buttonContents}
               </Button>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
 
-      {/*---Confirm Message Dialog---*/}
+      {/*-----CONFIRM MESSAGE DIALOG-----*/}
       <Dialog
         open={open}
         fullScreen={matchesXS}
         onClose={() => setOpen(false)}
-        style={{zIndex: 1302}}
+        style={{ zIndex: 1302 }}
         PaperProps={{
           style: {
             paddingTop: matchesXS ? "1em" : "5em",
@@ -412,21 +436,26 @@ export default function Contact({ setValue, setSelectedIndex }) {
                   email.length === 0 ||
                   emailHelper.length !== 0
                 }
-                onClick={() => setOpen(true)}
+                onClick={onConfirm}
               >
-                Send Message
-                <img
-                  src={airplane}
-                  alt="paper airplane"
-                  style={{ marginLeft: "1em" }}
-                />
+                {loading ? <CircularProgress size={30} /> : buttonContents}
               </Button>
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
 
-      {/*-----Call to Action Block----- */}
+      {/* Snackbar can be placed anywhere in return statement b/c toggled to make visible */}
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({...alert, open: false})}
+        autoHideDuration={4000}s
+      />
+
+      {/*-----CALL TO ACTION SECTION----- */}
       <Grid
         item
         container
