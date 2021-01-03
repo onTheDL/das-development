@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Contact({ setValue, setSelectedIndex }) {
   const classes = useStyles();
   const theme = useTheme();
-  
+
   // States
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -152,7 +152,14 @@ export default function Contact({ setValue, setSelectedIndex }) {
     setLoading(true);
 
     axios
-      .get("https://us-central1-dasdev-site.cloudfunctions.net/sendMail")
+      .get("https://us-central1-dasdev-site.cloudfunctions.net/sendMail", {
+        params: {
+          name: name,
+          email: email,
+          phone: phone,
+          message: message,
+        },
+      })
       .then((res) => {
         setLoading(false);
         setOpen(false);
@@ -160,11 +167,19 @@ export default function Contact({ setValue, setSelectedIndex }) {
         setEmail("");
         setPhone("");
         setMessage("");
-        setAlert({open: true, message: "Message sent successfully!", backgroundColor: "#4BB543"})
+        setAlert({
+          open: true,
+          message: "Message sent successfully!",
+          backgroundColor: "#4BB543",
+        });
       })
       .catch((err) => {
         setLoading(false);
-        setAlert({open: true, message: "An error occured.  Please try again.", backgroundColor: "#FF3232"})
+        setAlert({
+          open: true,
+          message: "An error occured.  Please try again.",
+          backgroundColor: "#FF3232",
+        });
       });
   };
 
@@ -244,7 +259,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
                     href="mailto:daniel.laserna@gmail.com"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    daniel.laserna@gmail.com
+                    das.software.dev@gmail.com
                   </a>
                 </Typography>
               </Grid>
@@ -451,8 +466,8 @@ export default function Contact({ setValue, setSelectedIndex }) {
         message={alert.message}
         ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        onClose={() => setAlert({...alert, open: false})}
-        autoHideDuration={4000}s
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
       />
 
       {/*-----CALL TO ACTION SECTION----- */}
