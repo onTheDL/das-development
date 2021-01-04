@@ -95,24 +95,38 @@ export default function Estimate({ setValue, setSelectedIndex }) {
 
   return (
     <Grid container direction="row">
-      <Grid item container direction="column">
-        <Grid item>
+      <Grid item container direction="column" lg>
+        <Grid item style={{ marginTop: "2em", marginLeft: "5em" }}>
           <Typography variant="h2">Estimate</Typography>
         </Grid>
 
-        <Grid item>
+        <Grid
+          item
+          style={{ marginRight: "10em", maxWidth: "50em", marginTop: "7.5em" }}
+        >
           <Lottie options={defaultOptions} height="100%" width="100%" />
         </Grid>
       </Grid>
 
-
       {/*----- WHICH SERVICES SECTION-----*/}
-      <Grid item container direction="column">
+      <Grid
+        item
+        container
+        direction="column"
+        alignItems="center"
+        lg
+        style={{ marginRight: "2em", marginBottom: "25em" }}
+      >
         <Grid item>
           <Typography
             variant="h2"
             align="center"
-            style={{ fontWeight: 300 }}
+            style={{
+              fontWeight: 500,
+              fontSize: "2.25rem",
+              marginTop: "5em",
+              marginBottom: "2.5em",
+            }}
             gutterBottom
           >
             Which service are you interested in?
@@ -120,46 +134,91 @@ export default function Estimate({ setValue, setSelectedIndex }) {
         </Grid>
 
         {/*---Custom Software Block---*/}
-        <Grid item container direction="column">
-          <Grid item style={{maxWidth: "12em"}}>
-            <Typography variant="h6" align="center">
-              Custom Software Development
-            </Typography>
+        <Grid item container>
+          <Grid item container direction="column" md>
+            <Grid item style={{ maxWidth: "12em" }}>
+              <Typography
+                variant="h6"
+                align="center"
+                style={{ marginBottom: "1em" }}
+              >
+                Custom Software Development
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <img
+                src={software}
+                alt="three floating screens"
+                className={classes.icon}
+              />
+            </Grid>
           </Grid>
 
-          <Grid item>
-            <img src={software} alt="three floating screens" />
+          {/*---iOS/Android Block---*/}
+          <Grid item container direction="column" md>
+            <Grid item style={{ maxWidth: "12em" }}>
+              <Typography
+                variant="h6"
+                align="center"
+                style={{ marginBottom: "1em" }}
+              >
+                iOS/Android App Development
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <img
+                src={mobile}
+                alt="phones and tablet outline"
+                className={classes.icon}
+              />
+            </Grid>
+          </Grid>
+
+          {/*---Website Dev Block---*/}
+          <Grid item container direction="column" md>
+            <Grid item style={{ maxWidth: "12em" }}>
+              <Typography
+                variant="h6"
+                align="center"
+                style={{ marginBottom: "1em" }}
+              >
+                Website Development
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <img
+                src={website}
+                alt="computer outline"
+                className={classes.icon}
+              />
+            </Grid>
           </Grid>
         </Grid>
-
-        {/*---iOS/Android Block---*/}
-        <Grid item container direction="column">
-          <Grid item style={{maxWidth: "12em"}}>
-            <Typography variant="h6" align="center">
-              iOS/Android App Development
-            </Typography>
-          </Grid>
-
+        
+        {/*--- Back and Forward Arrows ---*/}
+        <Grid
+          item
+          container
+          justify="space-between"
+          style={{ width: "15em", marginTop: "3em" }}
+        >
           <Grid item>
-            <img src={mobile} alt="phones and tablet outline" />
+            <img src={backArrow} alt="Previous question" />
+          </Grid>
+          <Grid item>
+            <img src={forwardArrow} alt="Next question" />
           </Grid>
         </Grid>
-
-        {/*---Website Dev Block---*/}
-        <Grid item container direction="column">
-          <Grid item style={{maxWidth: "12em"}}>
-            <Typography variant="h6" align="center">
-              Website Development
-            </Typography>
-          </Grid>
-
-          <Grid item>
-            <img src={website} alt="computer outline" />
-          </Grid>
+        
+        {/*--- Estimate Btn ---*/}
+        <Grid item>
+            <Button variant="contained" className={classes.estimateBtn}>Get Estimate</Button>
         </Grid>
 
       </Grid>
-
     </Grid>
   );
 }
