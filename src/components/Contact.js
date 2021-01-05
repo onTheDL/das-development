@@ -306,7 +306,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
             </Grid>
 
             {/* --- Message Text Field --- */}
-            <Grid item style={{ maxWidth: "20em" }}>
+            <Grid item style={{ maxWidth: "30em" }}>
               <TextField
                 InputProps={{ disableUnderline: true }}
                 className={classes.message}
