@@ -501,12 +501,12 @@ export default function Estimate({ setValue, setSelectedIndex }) {
         )
         .map((question) =>
           question.options.filter((option) => option.selected)
-        )[0][0].cost;
+        )[0][0];
 
-      cost -= userCost;
-      cost *= userCost;
-      console.log("userCost", userCost);
-      console.log("cost", cost);
+      setUsers(userCost.title);
+
+      cost -= userCost.cost;
+      cost *= userCost.cost;
     }
 
     setTotal(cost);
@@ -548,6 +548,22 @@ export default function Estimate({ setValue, setSelectedIndex }) {
         );
 
       setFeatures(newFeatures);
+    }
+  };
+
+  const getCustomFeatures = () => {
+    if (questions.length > 2) {
+      const newCustomFeatures = questions
+        .filter(
+          (question) =>
+            question.title ===
+            "What type of custom features do you expect to need?"
+        )
+        .map((question) =>
+          question.options.filter((option) => option.selected)
+        )[0][0].title;
+
+      setCustomFeatures(newCustomFeatures);
     }
   };
 
@@ -684,6 +700,7 @@ export default function Estimate({ setValue, setSelectedIndex }) {
               getTotal();
               getPlatforms();
               getFeatures();
+              getCustomFeatures();
             }}
           >
             Get Estimate
@@ -848,7 +865,7 @@ export default function Estimate({ setValue, setSelectedIndex }) {
                     </Grid>
                   </Grid>
 
-                  {/*--- Option Check ---*/}
+                  {/*--- Custom Options Check ---*/}
                   <Grid item container alignItems="center">
                     <Grid item>
                       <img src={check} alt="checkmark" />
@@ -856,7 +873,9 @@ export default function Estimate({ setValue, setSelectedIndex }) {
 
                     <Grid item>
                       <Typography variant="body1">
-                        Third option check
+                        The custom features will be of
+                        {" " + customFeatures.toLowerCase()}
+                        {`, and the project will be used by about ${users} users`}
                       </Typography>
                     </Grid>
                   </Grid>
