@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { cloneDeep } from "lodash";
 import Lottie from "react-lottie";
 import { Link } from "react-router-dom";
@@ -698,6 +699,48 @@ export default function Estimate({ setValue, setSelectedIndex }) {
     }
   };
 
+  const sendEstimate = () => {
+    axios
+      .get("https://us-central1-dasdev-site.cloudfunctions.net/sendMail", {
+        params: {
+          name: name,
+          email: email,
+          phone: phone,
+          message: message,
+          total: total,
+          category: category,
+          service: service,
+          platforms: platforms,
+          features: features,
+          customFeatures: customFeatures,
+          users: users,
+        },
+      })
+      .then((res) => console.log("sendEstimate", res))
+      .catch((err) => console.error(err));
+    // .then((res) => {
+    //   setLoading(false);
+    //   setOpen(false);
+    //   setName("");
+    //   setEmail("");
+    //   setPhone("");
+    //   setMessage("");
+    //   setAlert({
+    //     open: true,
+    //     message: "Message sent successfully!",
+    //     backgroundColor: "#4BB543",
+    //   });
+    // })
+    // .catch((err) => {
+    //   setLoading(false);
+    //   setAlert({
+    //     open: true,
+    //     message: "An error occured.  Please try again.",
+    //     backgroundColor: "#FF3232",
+    //   });
+    // });
+  };
+
   const websiteSelection = (
     <Grid container direction="column" style={{ marginTop: "14em" }}>
       {/*--- Platform Review Checklist ---*/}
@@ -1003,7 +1046,11 @@ export default function Estimate({ setValue, setSelectedIndex }) {
 
               {/*--- Estimate Send Button ---*/}
               <Grid item>
-                <Button variant="contained" className={classes.estimateBtn}>
+                <Button
+                  variant="contained"
+                  className={classes.estimateBtn}
+                  onClick={sendEstimate}
+                >
                   Place Request
                   <img
                     src={send}
