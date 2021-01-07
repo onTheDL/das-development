@@ -579,16 +579,20 @@ export default function Estimate({ setValue, setSelectedIndex }) {
     }
   };
 
- 
   const softwareSelection = (
     <Grid container direction="column">
       {/*--- Platform Review Checklist ---*/}
-      <Grid item container alignItems="center">
-        <Grid item>
+      <Grid
+        item
+        container
+        alignItems="center"
+        style={{ marginBottom: "1.25em" }}
+      >
+        <Grid item xs={2}>
           <img src={check} alt="checkmark" />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={10}>
           <Typography variant="body1">
             You selected {service}
             {platforms.length > 0
@@ -623,12 +627,17 @@ export default function Estimate({ setValue, setSelectedIndex }) {
       </Grid>
 
       {/*--- Features Review Checklist ---*/}
-      <Grid item container alignItems="center">
-        <Grid item>
+      <Grid
+        item
+        container
+        alignItems="center"
+        style={{ marginBottom: "1.25em" }}
+      >
+        <Grid item xs={2}>
           <img src={check} alt="checkmark" />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={10}>
           <Typography variant="body1">
             {"with "}
             {/* if we have features... */}
@@ -660,11 +669,11 @@ export default function Estimate({ setValue, setSelectedIndex }) {
 
       {/*--- Custom Options Checklist ---*/}
       <Grid item container alignItems="center">
-        <Grid item>
+        <Grid item xs={2}>
           <img src={check} alt="checkmark" />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={10}>
           <Typography variant="body1">
             The custom features will be of
             {" " + customFeatures.toLowerCase()}
@@ -675,8 +684,8 @@ export default function Estimate({ setValue, setSelectedIndex }) {
     </Grid>
   );
 
-   // Get Website Category
-   const getCategory = () => {
+  // Get Website Category
+  const getCategory = () => {
     if (questions.length === 2) {
       const newCategory = questions
         .filter(
@@ -690,14 +699,14 @@ export default function Estimate({ setValue, setSelectedIndex }) {
   };
 
   const websiteSelection = (
-    <Grid container direction="column">
+    <Grid container direction="column" style={{ marginTop: "14em" }}>
       {/*--- Platform Review Checklist ---*/}
       <Grid item container alignItems="center">
-        <Grid item>
+        <Grid item xs={2}>
           <img src={check} alt="checkmark" />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={10}>
           <Typography variant="body1">
             You selected{" "}
             {category === "Basic"
@@ -711,14 +720,29 @@ export default function Estimate({ setValue, setSelectedIndex }) {
 
   return (
     <Grid container direction="row">
-      <Grid item container direction="column" lg>
-        <Grid item style={{ marginTop: "2em", marginLeft: "5em" }}>
-          <Typography variant="h2">Estimate</Typography>
+      <Grid
+        item
+        container
+        direction="column"
+        lg
+        alignItems={matchesMD ? "center" : undefined}
+      >
+        <Grid
+          item
+          style={{ marginTop: "2em", marginLeft: matchesMD ? 0 : "5em" }}
+        >
+          <Typography variant="h2" align={matchesMD ? "center" : undefined}>
+            Estimate
+          </Typography>
         </Grid>
 
         <Grid
           item
-          style={{ marginRight: "10em", maxWidth: "50em", marginTop: "7.5em" }}
+          style={{
+            marginRight: matchesMD ? 0 : "10em",
+            maxWidth: "50em",
+            marginTop: "7.5em",
+          }}
         >
           <Lottie options={defaultOptions} height="100%" width="100%" />
         </Grid>
@@ -731,7 +755,7 @@ export default function Estimate({ setValue, setSelectedIndex }) {
         direction="column"
         alignItems="center"
         lg
-        style={{ marginRight: "2em", marginBottom: "25em" }}
+        style={{ marginRight: matchesMD ? 0 : "2em", marginBottom: "25em" }}
       >
         {questions
           .filter((question) => question.active)
@@ -745,6 +769,8 @@ export default function Estimate({ setValue, setSelectedIndex }) {
                     fontWeight: 500,
                     fontSize: "2.25rem",
                     marginTop: "5em",
+                    marginLeft: matchesSM ? "1em" : 0,
+                    marginRight: matchesSM ? "1em" : 0,
                     lineHeight: 1.25,
                   }}
                 >
@@ -774,6 +800,7 @@ export default function Estimate({ setValue, setSelectedIndex }) {
                     style={{
                       display: "grid",
                       textTransform: "none",
+                      marginBottom: matchesSM ? "1.5em" : 0,
                       borderRadius: 0,
                       backgroundColor: option.selected
                         ? theme.palette.common.orange
@@ -852,9 +879,24 @@ export default function Estimate({ setValue, setSelectedIndex }) {
       </Grid>
 
       {/*----- DIALOG COMPONENT-----*/}
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        fullWidth
+        fullScreen={matchesSM}
+        maxWidth="lg"
+        style={{ zIndex: 1302 }}
+        // PaperProps={{
+        //   style: {
+        //     paddingTop: "5em",
+        //     paddingBottom: "5em",
+        //     paddingLeft: "25em",
+        //     paddingRight: "25em",
+        //   },
+        // }}
+      >
         <Grid container justify="center">
-          <Grid item>
+          <Grid item style={{ marginTop: "1em", marginBottom: "1em" }}>
             <Typography variant="h2" align="center">
               Estimate
             </Typography>
@@ -862,9 +904,20 @@ export default function Estimate({ setValue, setSelectedIndex }) {
         </Grid>
 
         <DialogContent>
-          <Grid container>
+          <Grid
+            container
+            justify="space-around"
+            direction={matchesSM ? "column" : "row"}
+            alignItems={matchesSM ? "center" : undefined}
+          >
             {/*--- Name, Phone, Email Text Fields---*/}
-            <Grid item container direction="column" md={7}>
+            <Grid
+              item
+              container
+              direction="column"
+              md={7}
+              style={{ maxWidth: "20em" }}
+            >
               <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
                   label="Name"
@@ -912,13 +965,21 @@ export default function Estimate({ setValue, setSelectedIndex }) {
               </Grid>
 
               <Grid item>
-                <Typography variant="body1" paragraph>
+                <Typography
+                  variant="body1"
+                  align={matchesSM ? "center" : undefined}
+                  paragraph
+                >
                   We can create this digital solution for an estimated{" "}
                   <span className={classes.specialText}>
                     ${total.toFixed(2)}
                   </span>
                 </Typography>
-                <Typography variant="body1" paragraph>
+                <Typography
+                  variant="body1"
+                  align={matchesSM ? "center" : undefined}
+                  paragraph
+                >
                   Fill out your name, phone number, email, and message request,
                   and we'll get back to you with the details moving forward.
                 </Typography>
@@ -926,10 +987,19 @@ export default function Estimate({ setValue, setSelectedIndex }) {
             </Grid>
 
             {/*----- Estimate CheckList -----*/}
-            <Grid item container direction="column" md={5}>
-              <Grid item>
-                {questions.length > 2 ? softwareSelection : websiteSelection}
-              </Grid>
+            <Grid
+              item
+              container
+              direction="column"
+              alignItems={matchesSM ? "center" : undefined}
+              md={5}
+              style={{ maxWidth: "30em" }}
+            >
+              <Hidden smDown>
+                <Grid item>
+                  {questions.length > 2 ? softwareSelection : websiteSelection}
+                </Grid>
+              </Hidden>
 
               {/*--- Estimate Send Button ---*/}
               <Grid item>
@@ -942,6 +1012,25 @@ export default function Estimate({ setValue, setSelectedIndex }) {
                   />
                 </Button>
               </Grid>
+
+              {/*--- Cancel Button ---*/}
+              <Hidden mdUp>
+                <Grid
+                  item
+                  style={{
+                    marginBottom: matchesSM ? "5em" : 0,
+                    marginTop: "0.7em",
+                  }}
+                >
+                  <Button
+                    style={{ fontWeight: 300 }}
+                    color="primary"
+                    onClick={() => setDialogOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+              </Hidden>
             </Grid>
           </Grid>
         </DialogContent>

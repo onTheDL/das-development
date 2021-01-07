@@ -270,7 +270,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
               item
               container
               direction="column"
-              style={{ maxWidth: "20em" }}
+              style={{ width: "20em" }}
             >
               <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
@@ -306,7 +306,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
             </Grid>
 
             {/* --- Message Text Field --- */}
-            <Grid item style={{ maxWidth: "30em" }}>
+            <Grid item style={{ width: "30em" }}>
               <TextField
                 InputProps={{ disableUnderline: true }}
                 className={classes.message}
@@ -344,7 +344,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
       {/*-----CONFIRM MESSAGE DIALOG-----*/}
       <Dialog
         open={open}
-        fullScreen={matchesXS}
+        fullScreen={matchesSM}
         onClose={() => setOpen(false)}
         style={{ zIndex: 1302 }}
         PaperProps={{
@@ -356,15 +356,15 @@ export default function Contact({ setValue, setSelectedIndex }) {
               : matchesSM
               ? "5em"
               : matchesMD
-              ? "10em"
-              : "20em",
+              ? "15em"
+              : "25em",
             paddingRight: matchesXS
               ? 0
               : matchesSM
               ? "5em"
               : matchesMD
-              ? "10em"
-              : "20em",
+              ? "15em"
+              : "25em",
           },
         }}
       >
@@ -410,7 +410,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
           </Grid>
 
           {/* --- Message Text Field --- */}
-          <Grid item style={{ maxWidth: matchesXS ? "100%" : "20em" }}>
+          <Grid item style={{ width: matchesSM ? "100%" : "20em" }}>
             <TextField
               InputProps={{ disableUnderline: true }}
               className={classes.message}
