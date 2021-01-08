@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     border: `2px solid ${theme.palette.common.blue}`,
     marginTop: "5em",
     borderRadius: 5,
+    width: "20em",
   },
   sendBtn: {
     ...theme.typography.estimate,
@@ -312,7 +313,7 @@ export default function Contact({ setValue, setSelectedIndex }) {
                 className={classes.message}
                 value={message}
                 id="message"
-                fullWidth
+                placeholder="Tell us more about your project"
                 onChange={(e) => setMessage(e.target.value)}
                 multiline
                 rows={10}

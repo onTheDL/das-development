@@ -359,6 +359,12 @@ export default function Estimate({ setValue, setSelectedIndex }) {
   const [customFeatures, setCustomFeatures] = useState("");
   const [category, setCategory] = useState("");
   const [users, setUsers] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+  });
 
   // MEDIA QUERIES
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
@@ -700,6 +706,8 @@ export default function Estimate({ setValue, setSelectedIndex }) {
   };
 
   const sendEstimate = () => {
+    setLoading(true);
+
     axios
       .get("https://us-central1-dasdev-site.cloudfunctions.net/sendMail", {
         params: {
@@ -716,31 +724,43 @@ export default function Estimate({ setValue, setSelectedIndex }) {
           users: users,
         },
       })
-      .then((res) => console.log("sendEstimate", res))
-      .catch((err) => console.error(err));
-    // .then((res) => {
-    //   setLoading(false);
-    //   setOpen(false);
-    //   setName("");
-    //   setEmail("");
-    //   setPhone("");
-    //   setMessage("");
-    //   setAlert({
-    //     open: true,
-    //     message: "Message sent successfully!",
-    //     backgroundColor: "#4BB543",
-    //   });
-    // })
-    // .catch((err) => {
-    //   setLoading(false);
-    //   setAlert({
-    //     open: true,
-    //     message: "An error occured.  Please try again.",
-    //     backgroundColor: "#FF3232",
-    //   });
-    // });
+      .then((res) => {
+        setLoading(false);
+        setAlert({
+          open: true,
+          message: "Estimate placed successfully!",
+          backgroundColor: "#4BB543",
+        });
+        setDialogOpen(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+        setAlert({
+          open: true,
+          message: "An error occured.  Please try again.",
+          backgroundColor: "#FF3232",
+        });
+      });
   };
 
+  const estimateDisabled = () => {
+    let disabled = true
+
+    const emptySelections = questions.map(question => question.options.filter(option => option.selected)).filter(question => question.length === 0)
+
+    if (questions.length === 2) {
+      if (emptySelections.length === 1) {
+        disabled = false
+      }
+    } else if (questions.length === 1) {
+      disabled = true
+    } else if (emptySelections.length < 3 && questions[questions.length - 1].options.filter(option => option.selected).length > 0) {
+      disabled = false
+    }
+
+    return disabled
+  }
   const websiteSelection = (
     <Grid container direction="column" style={{ marginTop: "14em" }}>
       {/*--- Platform Review Checklist ---*/}
@@ -832,12 +852,13 @@ export default function Estimate({ setValue, setSelectedIndex }) {
 
               {/*---Option Block---*/}
               <Grid item container>
-                {question.options.map((option) => (
+                {question.options.map((option, index) => (
                   <Grid
                     item
                     container
                     direction="column"
                     md
+                    key={index}
                     component={Button}
                     onClick={() => handleSelect(option.id)}
                     style={{
@@ -907,6 +928,7 @@ export default function Estimate({ setValue, setSelectedIndex }) {
           <Button
             variant="contained"
             className={classes.estimateBtn}
+            disabled={estimateDisabled()}
             onClick={() => {
               setDialogOpen(true);
               getTotal();
@@ -1001,6 +1023,7 @@ export default function Estimate({ setValue, setSelectedIndex }) {
                   value={message}
                   id="message"
                   fullWidth
+                  placeholder="Tell us more about your project"
                   onChange={(e) => setMessage(e.target.value)}
                   multiline
                   rows={10}
@@ -1012,6 +1035,7 @@ export default function Estimate({ setValue, setSelectedIndex }) {
                   variant="body1"
                   align={matchesSM ? "center" : undefined}
                   paragraph
+                  style={{lineHeight: 1.15}}
                 >
                   We can create this digital solution for an estimated{" "}
                   <span className={classes.specialText}>
@@ -1050,13 +1074,27 @@ export default function Estimate({ setValue, setSelectedIndex }) {
                   variant="contained"
                   className={classes.estimateBtn}
                   onClick={sendEstimate}
+                  disabled={
+                    name.length === 0 ||
+                    message.length === 0 ||
+                    phone.length === 0 ||
+                    phoneHelper.length !== 0 ||
+                    email.length === 0 ||
+                    emailHelper.length !== 0
+                  }
                 >
-                  Place Request
-                  <img
-                    src={send}
-                    alt="paper airplane"
-                    style={{ marginLeft: "0.6em" }}
-                  />
+                  {loading ? (
+                    <CircularProgress />
+                  ) : (
+                    <>
+                      Place Request
+                      <img
+                        src={send}
+                        alt="paper airplane"
+                        style={{ marginLeft: "0.6em" }}
+                      />
+                    </>
+                  )}
                 </Button>
               </Grid>
 
@@ -1082,6 +1120,14 @@ export default function Estimate({ setValue, setSelectedIndex }) {
           </Grid>
         </DialogContent>
       </Dialog>
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{ style: { backgroundColor: alert.backgroundColor } }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={4000}
+      />
     </Grid>
   );
 }
